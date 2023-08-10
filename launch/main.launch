@@ -1,0 +1,14 @@
+<launch>
+    <arg name="mav_name" default="tx_uav" />
+
+    <node pkg="imu_mocap_fusion" type="imu_mocap_fusion" name="imu_mocap_fusion" output="screen">
+        <param name="cfgPath" value="$(find imu_mocap_fusion)/config/imu_mocap_fusion.yaml" />
+
+        <!-- subscribe -->
+        <remap from="~mocap" to="/vrpn_client_node/$(arg mav_name)/pose" />
+        <remap from="~imu" to="/mavros/imu/data" />
+
+        <!-- publish -->
+        <remap from="~odom" to="/$(arg mav_name)/imu_mocap_fusion/odom" />
+    </node>
+</launch>
